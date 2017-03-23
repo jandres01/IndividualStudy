@@ -6,6 +6,20 @@
 #incorrect {
   color: red;
 }
+
+table {
+  table-layout: fixed;
+  width: 80%;
+}
+
+td {
+  word-wrap: break-word;
+}
+
+#gradeInput {
+  display: inline;
+  width: 30px;
+}
 </style>
 
 <?php
@@ -26,17 +40,15 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+echo '<body>'; 
+
 $sql = "select *, multChoice.ans AS realAns from multChoice, multChoiceAnswer WHERE multChoiceAnswer.quest_id = multChoice.id && multChoice.quizNum = 1 && multChoiceAnswer.user_id = 3;"; 
 $prelimResult = $conn->query($sql);
 
 if ($prelimResult->num_rows > 0) {
   while($result = $prelimResult->fetch_assoc()) {
-    echo '<p>';
-    print_r($result);
-    echo '</p>';
-
     echo '<p id="question">' . $result["question"] . "</p>";
-    echo '<form id="answer" method="post" action="./multchoice.php">';
+    echo '<form>';
     if ( !empty($result["choice1"]) ) {
       echo '<input type="radio" name="answer" value="a"';
       if ($result["ans"] == "a") {
@@ -128,6 +140,7 @@ if ($prelimResult->num_rows > 0) {
       echo ">" . $result["choice6"] . '</p><br>';
     }
     echo "</form>";
+    echo "<hr>";
   }
 }
 
@@ -135,9 +148,31 @@ $sql = "select *, shortAnswer.ans AS realAns from shortAnswer, shortAnsAnswer WH
 $prelimResult = $conn->query($sql);
 
 if ($prelimResult->num_rows > 0) {
+  echo '<form id="grading" method="post">';
+
   while($result = $prelimResult->fetch_assoc()) {
-    print_r($result);
-    echo "<br>";
+    echo '<p id="question">' . $result["question"] . "</p>";
+    echo '<table id="shortAns">';
+
+    echo "<tr>";
+    echo '<th width="45%" id="correct">Sample Correct Answer</th>';
+    echo '<th width="45%">Student Answer</th>';
+    echo '<th width="10%">Grade</th>';
+    echo "</tr>";
+
+    echo "<tr>";
+    echo '<td>' . $result["realAns"] . "</td>";
+    echo '<td>' . $result["ans"] . "</td>";
+    echo '<td style="text-align:center;"><input id="gradeInput" type="test" name=' . $result["id"] . '>/20<br>';
+    echo "</tr>";
+
+    echo "</table>";
+    echo "<hr>";
   }
+
+  echo '<input type="submit" value="Submit Results">';
+  echo "</form>";
 }
+
+echo '</body>'; 
 ?>
