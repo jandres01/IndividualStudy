@@ -5,8 +5,8 @@ session_unset();
 #session_destroy();
 
 $_SESSION["quiz"] = 1;
-$_SESSION["username"] = "big dick mgee";
-$_SESSION["userid"] = 3;
+$_SESSION["studentname"] = "big dick mgee";
+$_SESSION["studentid"] = 3;
 ?>
 
 <form id="grading" method="post" action="./shortAnswerGrade.php">
