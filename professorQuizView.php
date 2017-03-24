@@ -35,6 +35,9 @@ $username = "quizproject";
 $password = "QuizGradesDontMatter";
 $dbname = "quizproject";
 
+$_SESSION['studentname'] = $_GET["editSA"];
+$_SESSION['quiz'] = $_GET["$quiz_id"];
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
