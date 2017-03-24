@@ -26,6 +26,7 @@
 
   if(isset($_GET['editQuiz'])) {
     $quiz_id= $_GET['editQuiz'];
+   
     echo "number = " .$quiz_id;
     unset($_GET['editQuiz']);
 
@@ -56,7 +57,7 @@
       echo "0 Quizzes";
     } */
 
-    echo "<form action='gradeShortAnswer.php'  method='get'>
+    echo "<form action='professorQuizView.php'  method='get'>
          <table><tr><th>User</th><th>Quiz #</th><th>MC Grade</th><th>SA Grade</th>
                     <th>Edit SA</th> </tr>";
     foreach ($list_id as $item) {

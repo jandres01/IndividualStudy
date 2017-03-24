@@ -35,8 +35,11 @@ $username = "quizproject";
 $password = "QuizGradesDontMatter";
 $dbname = "quizproject";
 
-$_SESSION['studentname'] = $_GET["editSA"];
-$_SESSION['quiz'] = $_GET["$quiz_id"];
+echo "wtf";
+
+$_SESSION['studentid'] = $_GET["editSA"];
+
+echo $_SESSION['editQuiz'];
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
@@ -46,7 +49,7 @@ if ($conn->connect_error) {
 if( isset($_SESSION['studentname']) && isset($_SESSION['studentid']) && isset($_SESSION['quiz'])) {
   echo '<body>'; 
   
-  $sql = "select *, multChoice.ans AS realAns from multChoice, multChoiceAnswer WHERE multChoiceAnswer.quest_id = multChoice.id && multChoice.quizNum=" . $_SESSION['quiz'] . " && multChoiceAnswer.user_id=" . $_SESSION['studentid'] . " ORDER BY multChoice.id;"; 
+  $sql = "select *, multChoice.ans AS realAns from multChoice, multChoiceAnswer WHERE multChoiceAnswer.quest_id = multChoice.id && multChoice.quizNum=" . $_SESSION['editQuiz'] . " && multChoiceAnswer.user_id=" . $_SESSION['studentid'] . " ORDER BY multChoice.id;"; 
   $prelimResult = $conn->query($sql);
   
   if ($prelimResult->num_rows > 0) {
