@@ -42,4 +42,4 @@ if (isset($_SESSION["userid"])) {
 
 ?>
 
-<button action="verifyUser.php">Go back to the home page</button>
+<a href="./verifyUser.php">Go back to the home page</a>

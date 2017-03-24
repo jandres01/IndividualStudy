@@ -26,7 +26,7 @@
 
   if(isset($_GET['editQuiz'])) {
     $quiz_id= $_GET['editQuiz'];
-   
+    $_SESSION['quiz'] = $quiz_id;   
     echo "number = " .$quiz_id;
     unset($_GET['editQuiz']);
 
@@ -68,6 +68,7 @@
         while($row = $result->fetch_assoc()) { 
           $sql2 = "Select * From shortAnswerScore where uid = '".$item."' 
               AND quizid = '".$quiz_id."' && questid = 0;";
+
           $result2 = $conn->query($sql2);
           if($result2->num_rows > 0) {
             while($row2 = $result2->fetch_assoc()) {
@@ -91,19 +92,6 @@
     }
     echo "</table></form>";
 /*
-  //echo " size = ".$size;
-      echo "userid =" .$user_id;
-      $sql2 = "Select * from users where user_id= '".$user_id ."';";
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-      // output data of each row
-        while($row = $result->fetch_assoc()) {
-          $userID = $row['user_ID'];
-          $_SESSION['user_id'] = $userID;
-        }
-      } else {
-      echo "0 users";
-      }
 */
   } 
 

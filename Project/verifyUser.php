@@ -11,7 +11,30 @@
     $_SESSION['password'] = $_POST['password'];
   } 
 
-  if ($_SESSION['userName'] == "dbomer"
+  $servername = "localhost";
+  $user = "quizproject";
+  $pass = "QuizGradesDontMatter";
+  $dbname = "quizproject";
+  // Create connection
+  $conn = new mysqli($servername, $user, $pass, $dbname);
+  // Check connection
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    echo "failed connection";
+  }
+ 
+  $sql = "SELECT * FROM users where user = '". $_SESSION['userName'] ."' && pass = '".$_SESSION['password']."';";
+  //  echo $sql;   //print query
+  $result = $conn->query($sql);
+  //  var_dump($result);
+  if ($result->num_rows <= 0) {
+    session_start();
+    session_unset();
+    echo "WTF";
+    header('Refresh: 0; URL=logout.php');      
+  // output data of each row
+  }  
+ /* if ($_SESSION['userName'] == "dbomer"
       && $_SESSION['password'] == "trinity1") {
 //      echo "right user = ".$_SESSION['userName'];      
 //      echo "right user = ".$_SESSION['password'];
@@ -24,7 +47,7 @@
       echo "right pass = ".$_SESSION['password'];
       header('Refresh:0 ; URL = logout.php');
     //  exit();
-  }
+  }*/ 
 
   $servername = "localhost";
   $user = "quizproject";

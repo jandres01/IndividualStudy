@@ -30,6 +30,8 @@ if ($_SERVER['SERVER_NAME'] != "dias11.cs.trinity.edu") {
   die();
 }
 
+print_r($_SESSION);
+
 $servername = "localhost";
 $username = "quizproject";
 $password = "QuizGradesDontMatter";
@@ -38,6 +40,7 @@ $dbname = "quizproject";
 #echo "wtf";
 
 $_SESSION['studentid'] = $_GET["editSA"];
+#$_SESSION['quiz'] = $_GET["quizID"];
 
 #echo $_SESSION['editQuiz'];
 
@@ -45,11 +48,11 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
 if( isset($_SESSION['studentid']) && isset($_SESSION['quiz'])) {
   echo '<body>'; 
   
-  $sql = "select *, multChoice.ans AS realAns from multChoice, multChoiceAnswer WHERE multChoiceAnswer.quest_id = multChoice.id && multChoice.quizNum=" . $_SESSION['editQuiz'] . " && multChoiceAnswer.user_id=" . $_SESSION['studentid'] . " ORDER BY multChoice.id;"; 
+  $sql = "select *, multChoice.ans AS realAns from multChoice, multChoiceAnswer WHERE multChoiceAnswer.quest_id = multChoice.id && multChoice.quizNum=" . $_SESSION['quiz'] . " && multChoiceAnswer.user_id=" . $_SESSION['studentid'] . " ORDER BY multChoice.id;"; 
+print $sql;
   $prelimResult = $conn->query($sql);
   
   if ($prelimResult->num_rows > 0) {

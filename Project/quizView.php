@@ -26,7 +26,7 @@ if (isset($_SESSION['userName']) && isset($_SESSION['student_id'])) {
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(!isset($_SESSION["questtype"]) && !isset($_SESSION["questnum"])) {
       $_SESSION["questtype"] = "mc";
-      $_SESSION["questnum"] = 1;
+      $_SESSION["questnum"] = 0;
       $_SESSION["quizID"] = $_REQUEST["quizID"];
     } else {
       $answer = $_REQUEST['answer'];
@@ -50,16 +50,19 @@ if (isset($_SESSION['userName']) && isset($_SESSION['student_id'])) {
   
   if (isset($_SESSION["quizID"])) {
     if ($_SESSION["questtype"] == "mc") {
-      $sql = "SELECT * FROM multChoice WHERE quizNum=" . $_REQUEST["quizID"] . " ORDER BY id LIMIT " . $_SESSION["questnum"] . ", 1";
+      $sql = "SELECT * FROM multChoice WHERE quizNum=" . $_SESSION["quizID"] . " ORDER BY id LIMIT " . $_SESSION["questnum"] . ", 1";
       $prelimResult = $conn->query($sql);
       $result = $prelimResult->fetch_assoc();
 
-      #echo "<p>";
-      #print_r($_SESSION);
-      #echo "</p>";
-      #echo "<p>";
-      #print_r($result);
-      #echo "</p>";
+      echo "<p>";
+      echo $sql;
+      echo "</p>";
+      echo "<p>";
+      print_r($_SESSION);
+      echo "</p>";
+      echo "<p>";
+      print_r($result);
+      echo "</p>";
       echo "<p>";
       print_r($_REQUEST);
       echo "</p>";
@@ -100,7 +103,7 @@ if (isset($_SESSION['userName']) && isset($_SESSION['student_id'])) {
   
       $_SESSION["questnum"] = $_SESSION["questnum"] + 1;
     } else {
-      $sql = "SELECT * FROM shortAnswer WHERE quizNum=" . $_REQUEST["quizID"] . " ORDER BY id LIMIT " . $_SESSION["questnum"] . ", 1;";
+      $sql = "SELECT * FROM shortAnswer WHERE quizNum=" . $_SESSION["quizID"] . " ORDER BY id LIMIT " . $_SESSION["questnum"] . ", 1;";
       $prelimResult = $conn->query($sql);
       $result = $prelimResult->fetch_assoc();
 
@@ -110,6 +113,8 @@ if (isset($_SESSION['userName']) && isset($_SESSION['student_id'])) {
       #echo "<p>";
       #print_r($_REQUEST);
       #echo "</p>";
+
+      $_SESSION['prevQid'] = $result['id'];
 
       if ($prelimResult->num_rows < 1) {
         unset($_SESSION["questtype"]);
