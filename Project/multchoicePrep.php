@@ -7,6 +7,8 @@ session_unset();
 $_SESSION["quiz"] = 1;
 $_SESSION["questtype"] = "mc";
 $_SESSION["questnum"] = 0;
+$_SESSION["username"] = "poop face mgee";
+$_SESSION["userid"] = 4;
 
-header('Location: ./multchoice.php');
+header('Location: ./quizView.php');
 ?>
