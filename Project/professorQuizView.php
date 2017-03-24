@@ -35,18 +35,18 @@ $username = "quizproject";
 $password = "QuizGradesDontMatter";
 $dbname = "quizproject";
 
-echo "wtf";
+#echo "wtf";
 
 $_SESSION['studentid'] = $_GET["editSA"];
 
-echo $_SESSION['editQuiz'];
+#echo $_SESSION['editQuiz'];
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-if( isset($_SESSION['studentname']) && isset($_SESSION['studentid']) && isset($_SESSION['quiz'])) {
+if( isset($_SESSION['studentid']) && isset($_SESSION['quiz'])) {
   echo '<body>'; 
   
   $sql = "select *, multChoice.ans AS realAns from multChoice, multChoiceAnswer WHERE multChoiceAnswer.quest_id = multChoice.id && multChoice.quizNum=" . $_SESSION['editQuiz'] . " && multChoiceAnswer.user_id=" . $_SESSION['studentid'] . " ORDER BY multChoice.id;"; 

@@ -20,7 +20,7 @@ echo "<h2>Quiz " . $_SESSION["quiz"] . " - Question " . ($_SESSION["questnum"]+1
 
 echo '<body id="quiz">QUESTION:<br>';
 
-if (isset($_SESSION['username']) && isset($_SESSION['userid'])) {
+if (isset($_SESSION['userName']) && isset($_SESSION['user_id'])) {
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $answer = $_REQUEST['answer'];
     $userid = $_SESSION['userid'];

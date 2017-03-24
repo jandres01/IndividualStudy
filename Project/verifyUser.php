@@ -1,28 +1,31 @@
 <?php
+  session_start();
   if ($_SERVER['SERVER_NAME'] != "dias11.cs.trinity.edu") {
     echo "<p>You must access this page from on campus through dias11.</p></body></html>";
     die ();
   }
-  session_start();
+
  //So SESSION doesn't remove vars when page is closed...
   if (is_null($_SESSION['userName']) || is_null($_SESSION['password'])) {
     $_SESSION['userName'] = trim($_POST['username']);
     $_SESSION['password'] = $_POST['password'];
   } 
-    if ($_SESSION['userName'] == "dbomer"
-        && $_SESSION['password'] == "trinity1") {
-//        echo "right user = ".$_SESSION['userName'];      
-//        echo "right user = ".$_SESSION['password'];
-    } else if ($_SESSION['userName'] == "mlewis" && 
-               $_SESSION['password'] == "trinity2") {
-   //     echo "right user = ".$_SESSION['userName'];
-    } else { 
-        echo 'Wrong username or password';    
-        echo "right user = ".$_SESSION['userName'];
-        echo "right pass = ".$_SESSION['password'];
-        header('Refresh:0 ; URL = logout.php');
-      //  exit();
-    }
+
+  if ($_SESSION['userName'] == "dbomer"
+      && $_SESSION['password'] == "trinity1") {
+//      echo "right user = ".$_SESSION['userName'];      
+//      echo "right user = ".$_SESSION['password'];
+  } else if ($_SESSION['userName'] == "mlewis" && 
+             $_SESSION['password'] == "trinity2") {
+ //     echo "right user = ".$_SESSION['userName'];
+  } else { 
+      echo 'Wrong username or password';    
+      echo "right user = ".$_SESSION['userName'];
+      echo "right pass = ".$_SESSION['password'];
+      header('Refresh:0 ; URL = logout.php');
+    //  exit();
+  }
+
   $servername = "localhost";
   $user = "quizproject";
   $pass = "QuizGradesDontMatter";
@@ -34,6 +37,7 @@
     die("Connection failed: " . $conn->connect_error);
     echo "failed connection";
   }
+
   $sql = "SELECT * FROM users where user = '". $_SESSION['userName'] ."' && pass = '".$_SESSION['password']."';";
   //  echo $sql;   //print query
   $result = $conn->query($sql);
@@ -86,7 +90,7 @@
          Group met-up and accomplished a quarter of the project today <br/>
          Hopefully we can finish this in time.
        <?php } else { ?>
-         Reminder to give everyone +100 for doing sucha  great job with the Projects!
+         Reminder to give everyone +100 for doing such a great job with the Projects!
        <?php } ?>
      </article>
     </section>
