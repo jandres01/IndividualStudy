@@ -1,0 +1,81 @@
+aside, footer, main,nav,section,article {
+   display:block;
+   padding: 0;
+   margin: 0;
+}
+
+.damn {
+   background-color: #11233b;
+   color:white;
+   padding: 10px 20px;
+}
+
+nav {
+   background-color:#ADD8E6;
+   padding: 2px;
+   margin-top: 1px;
+}
+
+li {
+   display: inline;
+   margin-left: 10px;
+   margin-right: 10px;
+   font-size: 13px;
+}
+
+body {
+   width: 960px;
+   margin-left: auto;
+   margin-right: auto;
+   background-color: #f0f0f0;
+   font-family: Helvetica, Arial, sans-serif;
+   font-size: 15px;
+}
+
+section {
+   background-color: #E6E6FA;
+   margin-top: 10px;
+   padding: 5px;
+}
+
+article {
+   background-color: white;	
+   margin-top: 5px;
+   padding: 10px 15px;
+}
+
+main {
+   width: 540px;
+   float: left;
+}
+
+aside {
+   background-color: #bbbbbb;
+   width: 270px;
+   float: right;
+   padding: 20px;
+   margin-top: 10px;
+}
+
+footer {
+   clear: both;
+}
+ /* 
+
+   border-style:solid;
+   border-width:1px; /*problem with px different resolutions each system*/
+   /*tingcolor.yellow;*/
+
+/*
+:hover {
+    background:radial-gradient(circle,red,yellow,green);
+   box-shadow: 10px 10px 20px purple;
+}
+div {
+  position:fixed;
+  float:right;
+  left:50px;
+  top:50px;
+  width:50%;
+}
+*/
