@@ -20,38 +20,46 @@ echo "<h2>Quiz " . $_SESSION["quiz"] . " - Question " . ($_SESSION["questnum"]+1
 
 echo '<body id="quiz">QUESTION:<br>';
 
-if (isset($_SESSION['userName']) && isset($_SESSION['user_id'])) {
+print_r($_SESSION);
+
+if (isset($_SESSION['userName']) && isset($_SESSION['student_id'])) {
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $answer = $_REQUEST['answer'];
-    $userid = $_SESSION['userid'];
-    if ($_SESSION["questtype"] == "mc") {
-      $sql = "INSERT INTO multChoiceAnswer (ans, user_id, quest_id, quiz_id) VALUES ('" . $answer . "', " . $userid . ", " . $_SESSION["prevQid"] . ", " . $_SESSION["quiz"] . ");";
-      if ($conn->query($sql) !== TRUE) {
-        echo $sql;
-        echo "<p>this didn't work :(</p>";
-        die();
-      }
+    if(!isset($_SESSION["questtype"]) && !isset($_SESSION["questnum"])) {
+      $_SESSION["questtype"] = "mc";
+      $_SESSION["questnum"] = 1;
+      $_SESSION["quizID"] = $_REQUEST["quizID"];
     } else {
-      $sql = "INSERT INTO shortAnsAnswer (ans, user_id, quest_id, quiz_id) VALUES ('" . $answer . "', " . $userid . ", " . $_SESSION["prevQid"] . ", " . $_SESSION["quiz"] . ");";
-      if ($conn->query($sql) !== TRUE) {
-        echo "this didn't work :(";
-        die();
+      $answer = $_REQUEST['answer'];
+      $userid = $_SESSION['student_id'];
+      if ($_SESSION["questtype"] == "mc") {
+        $sql = "INSERT INTO multChoiceAnswer (ans, user_id, quest_id, quiz_id) VALUES ('" . $answer . "', " . $userid . ", " . $_SESSION["prevQid"] . ", " . $_SESSION["quizID"] . ");";
+        if ($conn->query($sql) !== TRUE) {
+          echo $sql;
+          echo "<p>this didn't work :(</p>";
+          die();
+        }
+      } else {
+        $sql = "INSERT INTO shortAnsAnswer (ans, user_id, quest_id, quiz_id) VALUES ('" . $answer . "', " . $userid . ", " . $_SESSION["prevQid"] . ", " . $_SESSION["quizID"] . ");";
+        if ($conn->query($sql) !== TRUE) {
+          echo "this didn't work :(";
+          die();
+        }
       }
     }
   }
   
-  if (isset($_SESSION["quiz"]) && isset($_SESSION["questtype"]) && isset($_SESSION["questnum"])) {
+  if (isset($_SESSION["quizID"])) {
     if ($_SESSION["questtype"] == "mc") {
-      $sql = "SELECT * FROM multChoice WHERE quizNum=" . $_SESSION["quiz"] . " ORDER BY id LIMIT " . $_SESSION["questnum"] . ", 1";
+      $sql = "SELECT * FROM multChoice WHERE quizNum=" . $_REQUEST["quizID"] . " ORDER BY id LIMIT " . $_SESSION["questnum"] . ", 1";
       $prelimResult = $conn->query($sql);
       $result = $prelimResult->fetch_assoc();
 
-      echo "<p>";
-      print_r($_SESSION);
-      echo "</p>";
-      echo "<p>";
-      print_r($result);
-      echo "</p>";
+      #echo "<p>";
+      #print_r($_SESSION);
+      #echo "</p>";
+      #echo "<p>";
+      #print_r($result);
+      #echo "</p>";
       echo "<p>";
       print_r($_REQUEST);
       echo "</p>";
@@ -92,16 +100,16 @@ if (isset($_SESSION['userName']) && isset($_SESSION['user_id'])) {
   
       $_SESSION["questnum"] = $_SESSION["questnum"] + 1;
     } else {
-      $sql = "SELECT * FROM shortAnswer WHERE quizNum=" . $_SESSION["quiz"] . " ORDER BY id LIMIT " . $_SESSION["questnum"] . ", 1;";
+      $sql = "SELECT * FROM shortAnswer WHERE quizNum=" . $_REQUEST["quizID"] . " ORDER BY id LIMIT " . $_SESSION["questnum"] . ", 1;";
       $prelimResult = $conn->query($sql);
       $result = $prelimResult->fetch_assoc();
 
-      echo "<p>";
-      print_r($result);
-      echo "</p>";
-      echo "<p>";
-      print_r($_REQUEST);
-      echo "</p>";
+      #echo "<p>";
+      #print_r($result);
+      #echo "</p>";
+      #echo "<p>";
+      #print_r($_REQUEST);
+      #echo "</p>";
 
       if ($prelimResult->num_rows < 1) {
         unset($_SESSION["questtype"]);

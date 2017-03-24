@@ -151,7 +151,7 @@ if( isset($_SESSION['studentid']) && isset($_SESSION['quiz'])) {
     }
   }
   
-  $sql = "select *, shortAnswer.ans AS realAns from shortAnswer, shortAnsAnswer WHERE shortAnsAnswer.quest_id = shortAnswer.id && shortAnswer.quizNum=" . $_SESSION['quiz'] . " && shortAnsAnswer.user_id=" . $_SESSION['studentid'] . " ORDER BY shortAnswer.id;"; 
+  $sql = "select *, shortAnswer.ans AS realAns, shortAnswer.id AS questid from shortAnswer, shortAnsAnswer WHERE shortAnsAnswer.quest_id = shortAnswer.id && shortAnswer.quizNum=" . $_SESSION['quiz'] . " && shortAnsAnswer.user_id=" . $_SESSION['studentid'] . " ORDER BY shortAnswer.id;"; 
   $prelimResult = $conn->query($sql);
   
   if ($prelimResult->num_rows > 0) {
@@ -170,7 +170,7 @@ if( isset($_SESSION['studentid']) && isset($_SESSION['quiz'])) {
       echo "<tr>";
       echo '<td>' . $result["realAns"] . "</td>";
       echo '<td style="border-left: 1px solid #bbb">' . $result["ans"] . "</td>";
-      echo '<td style="text-align:center;"><input id="gradeInput" type="text" name=' . $result["id"] . '>/20<br>';
+      echo '<td style="text-align:center;"><input id="gradeInput" type="text" name=' . $result["questid"] . '>/20<br>';
       echo "</tr>";
   
       echo "</table>";

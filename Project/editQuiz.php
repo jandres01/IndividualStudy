@@ -66,30 +66,29 @@
       $result = $conn->query($sql);
       if($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) { 
-
-      $sql2 = "Select * From shortAnswerScore where uid = '".$item."' 
-              AND quizid = '".$quiz_id."';";
-      $result2 = $conn->query($sql2);
-      if($result2->num_rows > 0) {
-        while($row2 = $result2->fetch_assoc()) {
-
-      $sql3 = "Select * From users where id = '".$item."';";
-      $result3 = $conn->query($sql3);
-
-      if($result3->num_rows > 0) {
-        while($row3 = $result3->fetch_assoc()) {
-          echo "<tr><td>".$row3["last"].", ".$row3["first"]."</td><td>".$quiz_id."</td>
-             <td>".$row["grade"]."</td><td>".$row2["grade"]."</td>
-             <td><button type='submit' value='".$item."' 
-                 class='btn btn-default' name='editSA'>edit Score</button>
-             </td></tr>";
+          $sql2 = "Select * From shortAnswerScore where uid = '".$item."' 
+              AND quizid = '".$quiz_id."' && questid = 0;";
+          $result2 = $conn->query($sql2);
+          if($result2->num_rows > 0) {
+            while($row2 = $result2->fetch_assoc()) {
+              $sql3 = "Select * From users where id = '".$item."';";
+              $result3 = $conn->query($sql3);
+              if($result3->num_rows > 0) {
+                while($row3 = $result3->fetch_assoc()) {
+                  echo "<tr><td>".$row3["last"].", ".$row3["first"]."</td><td>".$quiz_id."</td>
+                        <td>".$row["grade"]."</td><td>".$row2["grade"]."</td>
+                        <td><button type='submit' value='".$item."' 
+                        class='btn btn-default' name='editSA'>edit Score</button>
+                        </td></tr>";
+                }
+              } else {
+              echo "0 damn";
+              }
+            }
+          }
         }
-      } else {
-        echo "0 from toDoList";
       }
     }
-    }}
-    }}
     echo "</table></form>";
 /*
   //echo " size = ".$size;

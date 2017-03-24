@@ -33,9 +33,13 @@ if (isset($_SESSION["userid"])) {
 
     $sql = "INSERT INTO hasTaken (user_id, quiz_id) VALUE (" . $_SESSION['userid'] . ", " . $_SESSION['quiz'] . ");";
     $conn->query($sql);
+
+    unset($_SESSION["quizID"]);
+    unset($_SESSION["questtype"]);
+    unset($_SESSION["questnum"]);
   }
 }
 
 ?>
 
-<p>Somewhere around here there would probably be a button to go back to the home page</p>
+<button action="verifyUser.php">Go back to the home page</button>
