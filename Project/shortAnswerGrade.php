@@ -36,9 +36,17 @@ if (isset($_SESSION['studentname']) && isset($_SESSION['studentid'])) {
         }
       }
 
-      $sql = "SELECT avg(grade) AS avg FROM shortAnswerScore WHERE uid=" . $_SESSION['studentid'] . ";";
-      $result = $conn->query($sql)->fetch_assoc();
-      $sql = "INSERT INTO shortAnswerScore (uid, quizid, questid, grade) values (" . $_SESSION['studentid'] . ", " . $_SESSION['quiz'] . ", 0, " . $result['avg'] . ");";
+      $sql = "SELECT avg(grade) AS avg, count(*) AS cnt FROM shortAnswerScore WHERE uid=" . $_SESSION['studentid'] . ";";
+      $result1 = $conn->query($sql)->fetch_assoc();
+      $sql = "INSERT INTO shortAnswerScore (uid, quizid, questid, grade) values (" . $_SESSION['studentid'] . ", " . $_SESSION['quiz'] . ", 0, " . $result1['avg'] . ");";
+      $conn->query($sql);
+
+      $sql = "SELECT avg(grade) AS avg, count(*) AS cnt FROM multChoiceScore WHERE uid=" . $_SESSION['studentid'] . ";";
+      $result2 = $conn->query($sql)->fetch_assoc();
+
+      $total = $result1["cnt"] + $result2["cnt"];
+      $avg = ($result1["cnt"]/$total * $result1["avg"]) + ($result2["cnt"]/$total * $result2["avg"]);
+      $sql = "INSERT INTO scores (pct, user_id, quiz_id) VALUE (" . $avg . ", " . $_SESSION['studentid'] . ", " . $_SESSION['quiz'] . ");";
       $conn->query($sql);
     } else {
       echo "<p>There is something already in the database</p>";
