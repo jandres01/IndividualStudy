@@ -24,12 +24,15 @@
     echo "failed connection";
   }
 
-  if(isset($_GET['editQuiz'])) {
-    $quiz_id= $_GET['editQuiz'];
+  if(isset($_POST['editQuiz'])) {
+    $quiz_id= $_POST['editQuiz'];
     $_SESSION['quiz'] = $quiz_id;   
     echo "number = " .$quiz_id;
     unset($_GET['editQuiz']);
+  }
 
+  if (isset($_SESSION['quiz'])) {
+    $quiz_id = $_SESSION['quiz'];
     $list_id = array();
     $sql = "SELECT * FROM hasTaken where quiz_id = '". $quiz_id ."';";
     $result = $conn->query($sql);

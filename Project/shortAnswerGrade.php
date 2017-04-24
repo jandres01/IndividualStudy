@@ -51,7 +51,7 @@ if (isset($_SESSION['studentname']) && isset($_SESSION['studentid'])) {
     } else {
       echo "<p>There is something already in the database</p>";
     }
-    #header("Location:"); =========================================================================================================
+    header("Location: editQuiz.php");
   }
 }
 ?>

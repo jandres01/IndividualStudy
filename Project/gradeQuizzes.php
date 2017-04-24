@@ -11,7 +11,7 @@
     echo "failed connection";
   }
  
-  echo "<form action='editQuiz.php'  method='get'>
+  echo "<form action='editQuiz.php'  method='post'>
          <table><tr><th>Quizzes</th><th>Edit Quiz</th></tr>";
     $sql3 = "Select * From quizzes;";
     $result3 = $conn->query($sql3);
