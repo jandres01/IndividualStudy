@@ -34,20 +34,6 @@
     header('Refresh: 0; URL=logout.php');      
   // output data of each row
   }  
- /* if ($_SESSION['userName'] == "dbomer"
-      && $_SESSION['password'] == "trinity1") {
-//      echo "right user = ".$_SESSION['userName'];      
-//      echo "right user = ".$_SESSION['password'];
-  } else if ($_SESSION['userName'] == "mlewis" && 
-             $_SESSION['password'] == "trinity2") {
- //     echo "right user = ".$_SESSION['userName'];
-  } else { 
-      echo 'Wrong username or password';    
-      echo "right user = ".$_SESSION['userName'];
-      echo "right pass = ".$_SESSION['password'];
-      header('Refresh:0 ; URL = logout.php');
-    //  exit();
-  }*/ 
 
   $servername = "localhost";
   $user = "quizproject";
@@ -143,11 +129,24 @@
            $sql3 = "Select * From quizzes;";
            $result3 = $conn->query($sql3);
            if($result3->num_rows > 0) {
-             while($row3 = $result3->fetch_assoc()) { 
-              echo "<tr><td>Quiz ".$row3["id"]."</td>
-                    <td><button type='submit' value='".$row3['id']."' 
-                    class='btn btn-default' name='quizID'> Take Quiz</button>
-                    </td></tr>";
+             while($row3 = $result3->fetch_assoc()) {
+	       $sql4 = "Select * from hasTaken where user_id ='".$_SESSION['student_id']."';";
+	       $result4 = $conn->query($sql4);
+	       if($result4->num_rows <= 0) {
+                 echo "<tr><td>Quiz ".$row3["id"]."</td>
+                       <td><button type='submit' value='".$row3['id']."' 
+                        class='btn btn-default' name='quizID'> Take Quiz</button>
+                    	</td></tr>";
+               } else if($result4->num_rows > 0) {  
+		//insert code to stop user from taking quiz again
+		//removes button if 1 user has takenQuiz
+		  /*while($row4 = $result4->fetch_assoc()) {
+		    echo "<tr><td>Quiz ".$row3["id"]."</td>
+                       <td><button type='submit' value='".$row3['id']."' 
+                        class='btn btn-default' name='quizID'> Take Quiz</button>
+                        </td></tr>";
+	          } */
+               }
              }
            } else {
              echo "0 Quizzes";

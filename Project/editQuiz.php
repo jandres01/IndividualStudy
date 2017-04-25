@@ -33,7 +33,6 @@
 
   if (isset($_SESSION['quiz'])) {
     $quiz_id = $_SESSION['quiz'];
-    $list_id = array();
     $sql = "SELECT * FROM hasTaken where quiz_id = '". $quiz_id ."';";
     $result = $conn->query($sql);
 //  var_dump($result);
@@ -41,7 +40,7 @@
     if ($result->num_rows > 0) {
       while($row = $result->fetch_assoc()) {
         $userID = $row['user_id'];
-        array_push($list_id,$userID);
+        array_push($list_id,$userID);  //adds to list_id quizzes taken by a user
       }
     } else {
     echo "0 users";
@@ -67,27 +66,29 @@
       $sql = "Select * From multChoiceScore where uid = '".$item."' 
               AND quizid = '".$quiz_id."';";
       $result = $conn->query($sql);
+     // echo $sql;
       if($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) { 
-          $sql2 = "Select * From shortAnswerScore where uid = '".$item."' 
-              AND quizid = '".$quiz_id."' && questid = 0;";
-
+          $sql2 = "Select * From users where id = '".$item."';";
+	  //echo $sql2;
           $result2 = $conn->query($sql2);
           if($result2->num_rows > 0) {
             while($row2 = $result2->fetch_assoc()) {
-              $sql3 = "Select * From users where id = '".$item."';";
+              $sql3 = "Select * From shortAnswerScore where uid = '".$item."' 
+              		AND quizid = '".$quiz_id."';";
               $result3 = $conn->query($sql3);
-              if($result3->num_rows > 0) {
-                while($row3 = $result3->fetch_assoc()) {
-                  echo "<tr><td>".$row3["last"].", ".$row3["first"]."</td><td>".$quiz_id."</td>
-                        <td>".$row["grade"]."</td><td>".$row2["grade"]."</td>
+	    //  echo $sql3;
+              //if($result3->num_rows > 0) {
+                //while($row3 = $result3->fetch_assoc()) {
+                  echo "<tr><td>".$row2["last"].", ".$row2["first"]."</td><td>".$quiz_id."</td>
+                        <td>".$row["grade"]."</td><td></td><td>".$row3["grade"]."</td>
                         <td><button type='submit' value='".$item."' 
                         class='btn btn-default' name='editSA'>edit Score</button>
                         </td></tr>";
-                }
-              } else {
-              echo "0 damn";
-              }
+               // }
+              //} else {
+              //echo "0 damn";
+              //}
             }
           }
         }
