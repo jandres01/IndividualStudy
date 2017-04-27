@@ -20,7 +20,7 @@ echo "<h2>Quiz " . $_SESSION["quiz"] . " - Question " . ($_SESSION["questnum"]+1
 
 echo '<body id="quiz">QUESTION:<br>';
 
-print_r($_SESSION);
+#print_r($_SESSION);
 
 if (isset($_SESSION['userName']) && isset($_SESSION['student_id'])) {
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -54,18 +54,18 @@ if (isset($_SESSION['userName']) && isset($_SESSION['student_id'])) {
       $prelimResult = $conn->query($sql);
       $result = $prelimResult->fetch_assoc();
 
-      echo "<p>";
-      echo $sql;
-      echo "</p>";
-      echo "<p>";
-      print_r($_SESSION);
-      echo "</p>";
-      echo "<p>";
-      print_r($result);
-      echo "</p>";
-      echo "<p>";
-      print_r($_REQUEST);
-      echo "</p>";
+      #echo "<p>";
+      #echo $sql;
+      #echo "</p>";
+      #echo "<p>";
+      #print_r($_SESSION);
+      #echo "</p>";
+      #echo "<p>";
+      #print_r($result);
+      #echo "</p>";
+      #echo "<p>";
+      #print_r($_REQUEST);
+      #echo "</p>";
 
       if ($prelimResult->num_rows < 1) {
         $_SESSION["questtype"] = "sa";
