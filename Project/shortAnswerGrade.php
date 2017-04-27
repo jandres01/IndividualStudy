@@ -8,7 +8,7 @@ if ($_SERVER['SERVER_NAME'] != "dias11.cs.trinity.edu") {
   die();
 }
 
-if (isset($_SESSION['studentname']) && isset($_SESSION['studentid'])) {
+if (isset($_SESSION['studentid'])) {
   $servername = "localhost";
   $username = "quizproject";
   $password = "QuizGradesDontMatter";
@@ -51,7 +51,7 @@ if (isset($_SESSION['studentname']) && isset($_SESSION['studentid'])) {
     } else {
       echo "<p>There is something already in the database</p>";
     }
-    #header("Location: editQuiz.php");
+    header("Location: editQuiz.php");
   }
 }
 ?>
